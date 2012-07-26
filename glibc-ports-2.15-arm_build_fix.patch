@@ -1,0 +1,13 @@
+Origin:                  https://bugzilla.redhat.com/show_bug.cgi?id=781765
+
+--- glibc-2.15-orig/ports/sysdeps/arm/Makefile	
++++ glibc-2.15/ports/sysdeps/arm/Makefile	
+@@ -7,3 +7,8 @@ endif
+ ifeq ($(subdir),csu)
+ gen-as-const-headers += tlsdesc.sym
+ endif
++
++# to pull in __aeabi_read_tp, needed for tls
++ifeq ($(subdir),malloc)
++$(objpfx)libmemusage.so: $(common-objpfx)libc_nonshared.a
++endif
