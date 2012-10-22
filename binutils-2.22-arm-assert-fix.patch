@@ -1,22 +1,51 @@
-Origin:                  http://sourceware.org/bugzilla/show_bug.cgi?id=14189
+Origin:                  http://sourceware.org/bugzilla/show_bug.cgi?id=13990
+                         http://sourceware.org/bugzilla/show_bug.cgi?id=14189
 
 diff -ur binutils-2.22-orig/bfd/ChangeLog binutils-2.22/bfd/ChangeLog
 --- binutils-2.22-orig/bfd/ChangeLog	2011-11-21 11:55:49.000000000 +0000
-+++ binutils-2.22/bfd/ChangeLog	2012-10-12 22:06:46.145776984 +0100
-@@ -1,3 +1,9 @@
++++ binutils-2.22/bfd/ChangeLog	2012-10-22 22:10:54.412499047 +0100
+@@ -1,3 +1,15 @@
 +2012-06-29  Nick Clifton  <nickc@redhat.com>
 +
 +	PR ld/14189
 +	* elf32-arm.c (elf32_arm_check_relocs): Do not increment refcount
 +	for locally bound symbols.
 +
++2012-04-24  Hans-Peter Nilsson  <hp@axis.com>
++
++       PR ld/13990
++       * elf32-arm.c (elf32_arm_gc_sweep_hook): Handle a forced-local
++       symbol, where PLT refcount is set to -1.
++
  2011-11-21  Tristan Gingold  <gingold@adacore.com>
  
  	* configure.in: Bump version to 2.22
 diff -ur binutils-2.22-orig/bfd/elf32-arm.c binutils-2.22/bfd/elf32-arm.c
 --- binutils-2.22-orig/bfd/elf32-arm.c	2011-11-21 09:29:13.000000000 +0000
-+++ binutils-2.22/bfd/elf32-arm.c	2012-10-12 22:07:46.099104722 +0100
-@@ -12408,7 +12408,8 @@
++++ binutils-2.22/bfd/elf32-arm.c	2012-10-22 21:58:49.002382059 +0100
+@@ -12046,8 +12046,19 @@
+       if (may_need_local_target_p
+ 	  && elf32_arm_get_plt_info (abfd, eh, r_symndx, &root_plt, &arm_plt))
+ 	{
+-	  BFD_ASSERT (root_plt->refcount > 0);
+-	  root_plt->refcount -= 1;
++	  /* If PLT refcount book-keeping is wrong and too low, we'll
++	     see a zero value (going to -1) for the root PLT reference
++	     count.  */
++	  if (root_plt->refcount >= 0)
++	    {
++	      BFD_ASSERT (root_plt->refcount != 0);
++	      root_plt->refcount -= 1;
++	    }
++	  else
++	    /* A value of -1 means the symbol has become local, forced
++	       or seeing a hidden definition.  Any other negative value
++	       is an error.  */
++	    BFD_ASSERT (root_plt->refcount == -1);
+ 
+ 	  if (!call_reloc_p)
+ 	    arm_plt->noncall_refcount--;
+@@ -12408,7 +12419,8 @@
  
  	  /* If the symbol is a function that doesn't bind locally,
  	     this relocation will need a PLT entry.  */
