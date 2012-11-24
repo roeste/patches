@@ -1,0 +1,17 @@
+Origin:                  http://www.intestinate.com/pilfs/
+                         https://github.com/archlinuxarm/PKGBUILDs/issues/242
+
+--- openssl-1.0.1c-orig/crypto/armcap.c	2012-11-22 16:25:39.472349263 +0000
++++ openssl-1.0.1c/crypto/armcap.c	2012-11-22 16:29:49.602656218 +0000
+@@ -47,6 +47,11 @@
+ 		OPENSSL_armcap_P=strtoul(e,NULL,0);
+ 		return;
+ 		}
++	else
++		{
++		OPENSSL_armcap_P=6;
++		return;
++		}
+ 
+ 	sigfillset(&all_masked);
+ 	sigdelset(&all_masked,SIGILL);
