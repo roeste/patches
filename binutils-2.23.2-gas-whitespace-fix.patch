@@ -1,0 +1,22 @@
+Origin:                  http://sourceware.org/bugzilla/show_bug.cgi?id=14887
+
+diff -ur binutils-2.23.2-orig/gas/config/tc-arm.c binutils-2.23.2/gas/config/tc-arm.c
+--- binutils-2.23.2-orig/gas/config/tc-arm.c	2013-03-25 08:06:21.000000000 +0000
++++ binutils-2.23.2/gas/config/tc-arm.c	2013-04-01 16:42:10.886002657 +0100
+@@ -885,6 +885,7 @@
+ static inline int
+ skip_past_char (char ** str, char c)
+ {
++  skip_whitespace (*str);
+   if (**str == c)
+     {
+       (*str)++;
+@@ -5168,6 +5169,8 @@
+       return PARSE_OPERAND_SUCCESS;
+     }
+ 
++  skip_whitespace (p);
++
+   if ((reg = arm_reg_parse (&p, REG_TYPE_RN)) == FAIL)
+     {
+       inst.error = _(reg_expected_msgs[REG_TYPE_RN]);
