@@ -1,0 +1,17 @@
+Origin:                  http://www.intestinate.com/pilfs
+
+--- gcc-4.9.0-orig/gcc/config.gcc	2014-04-29 20:52:35.000000000 -0400
++++ gcc-4.9.0/gcc/config.gcc	2014-04-29 20:55:01.000000000 -0400
+@@ -1028,6 +1028,12 @@
+ 	    tmake_file="$tmake_file arm/t-linux-androideabi"
+ 	    ;;
+ 	esac
++	case ${target} in
++	arm*-*-*eabihf)
++	    with_cpu=${with_cpu:-arm1176jzf-s}
++	    with_float=${with_float:-hard}
++	    ;;
++	esac
+ 	# The EABI requires the use of __cxa_atexit.
+ 	default_use_cxa_atexit=yes
+ 	with_tls=${with_tls:-gnu}
