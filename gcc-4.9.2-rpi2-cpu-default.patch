@@ -1,3 +1,5 @@
+Origin:                  http://www.intestinate.com/pilfs
+
 --- gcc-4.9.2-orig/gcc/config.gcc	2014-09-17 10:16:02.000000000 -0400
 +++ gcc-4.9.2/gcc/config.gcc	2015-02-10 22:40:08.000000000 -0500
 @@ -1034,6 +1034,13 @@

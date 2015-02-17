@@ -1,3 +1,5 @@
+Origin:                  http://www.intestinate.com/pilfs
+
 --- gmp-6.0.0-orig/config.guess	2015-02-12 17:41:23.863708955 +0000
 +++ gmp-6.0.0/config.guess	2015-02-12 17:44:40.843532514 +0000
 @@ -173,7 +173,7 @@
