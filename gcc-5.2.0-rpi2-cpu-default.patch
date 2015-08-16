@@ -1,0 +1,16 @@
+--- gcc-5.2.0-orig/gcc/config.gcc	2015-08-12 22:52:18.307460317 -0400
++++ gcc-5.2.0/gcc/config.gcc	2015-08-12 22:56:05.517691561 -0400
+@@ -1050,6 +1050,13 @@
+ 	    tmake_file="$tmake_file arm/t-linux-androideabi"
+ 	    ;;
+ 	esac
++	case ${target} in
++	arm*-*-*eabihf)
++	    with_cpu=${with_cpu:-cortex-a7}
++	    with_fpu=${with_fpu:-neon-vfpv4}
++	    with_float=${with_float:-hard}
++	    ;;
++	esac
+ 	# The EABI requires the use of __cxa_atexit.
+ 	default_use_cxa_atexit=yes
+ 	with_tls=${with_tls:-gnu}
