@@ -1,3 +1,5 @@
+Origin:                  http://www.intestinate.com/pilfs
+
 --- glibc-2.22-orig/scripts/test-installation.pl	2015-08-14 19:06:51.543327102 -0400
 +++ glibc-2.22/scripts/test-installation.pl	2015-08-14 19:07:51.623396840 -0400
 @@ -111,9 +111,11 @@
