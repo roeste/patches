@@ -8,9 +8,9 @@ int main(int argc, char **argv, char **envp) {
 
 	newargv[0] = argv[0];
 	newargv[1] = "-cpu";
-	newargv[2] = "arm1176";
+	newargv[2] = "cortex-a9";
 	newargv[3] = "-r";
-	newargv[4] = "4.1.10+";
+	newargv[4] = "4.1.10-v7+";
 
 	memcpy(&newargv[5], &argv[1], sizeof(*argv) * (argc - 1));
 	newargv[argc + 4] = NULL;
