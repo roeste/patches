@@ -1,0 +1,46 @@
+diff -ur xbmc-15.2-Isengard-orig/configure.ac xbmc-15.2-Isengard/configure.ac
+--- xbmc-15.2-Isengard-orig/configure.ac	2015-10-24 15:47:32.982850061 -0700
++++ xbmc-15.2-Isengard/configure.ac	2015-10-24 15:51:28.672903940 -0700
+@@ -743,9 +743,9 @@
+ case $use_platform in
+   raspberry-pi)
+      target_platform=target_raspberry_pi
+-     use_neon=no
++     use_neon=yes
+      use_arch="arm"
+-     use_cpu=arm1176jzf-s
++     use_cpu=cortex-a7
+      use_hardcoded_tables="yes"
+      use_openmax=no
+      ARCH="arm"
+diff -ur xbmc-15.2-Isengard-orig/tools/depends/configure.ac xbmc-15.2-Isengard/tools/depends/configure.ac
+--- xbmc-15.2-Isengard-orig/tools/depends/configure.ac	2015-10-24 15:48:51.962868774 -0700
++++ xbmc-15.2-Isengard/tools/depends/configure.ac	2015-10-24 15:52:37.652918612 -0700
+@@ -306,9 +306,9 @@
+   else
+     AC_MSG_ERROR([Raspberry Pi firmware not found])
+   fi
+-  use_neon=no
++  use_neon=yes
+   use_arch="arm"
+-  use_cpu="arm1176jzf-s"
++  use_cpu="cortex-a7"
+   use_hardcoded_tables="yes"
+   use_alsa="no"
+   ARCH="arm"
+@@ -316,13 +316,11 @@
+   cross_compiling="yes"
+   use_host="arm-linux-gnueabihf"
+   deps_dir="$use_host"
+-  platform_cflags="-pipe -mcpu=arm1176jzf-s -mtune=arm1176jzf-s -mfloat-abi=hard \
+-   -mfpu=vfp -mabi=aapcs-linux -Wno-psabi -Wa,-mno-warn-deprecated \
++  platform_cflags="-pipe -Wno-psabi -Wa,-mno-warn-deprecated \
+    -Wno-deprecated-declarations -isystem${use_firmware}/opt/vc/include \
+    -isystem${use_firmware}/opt/vc/include/interface/vcos/pthreads \
+    -isystem${use_firmware}/opt/vc/include/interface/vmcs_host/linux"
+-  platform_cxxflags="-pipe -mcpu=arm1176jzf-s -mtune=arm1176jzf-s \
+-   -mfloat-abi=hard -mfpu=vfp -mabi=aapcs-linux -Wno-psabi \
++  platform_cxxflags="-pipe -Wno-psabi \
+    -Wa,-mno-warn-deprecated -Wno-deprecated-declarations \
+    -isystem${use_firmware}/opt/vc/include \
+    -isystem${use_firmware}/opt/vc/include/interface/vcos/pthreads \
