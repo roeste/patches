@@ -1,0 +1,32 @@
+diff -ur crda-3.18.orig/Makefile crda-3.18/Makefile
+--- crda-3.18.orig/Makefile	2014-12-10 23:51:29.000000000 +0000
++++ crda-3.18/Makefile	2016-02-15 00:08:33.093063387 +0000
+@@ -26,7 +26,7 @@
+ RUNTIME_PUBKEY_DIR?=/etc/wireless-regdb/pubkeys
+ 
+ CFLAGS += -O2 -fpic
+-CFLAGS += -std=gnu99 -Wall -Werror -pedantic
++CFLAGS += -std=gnu99 -Wall -pedantic
+ CFLAGS += -Wall -g
+ LDLIBREG += -lreg
+ LDLIBS += $(LDLIBREG)
+diff -ur crda-3.18.orig/utils/key2pub.py crda-3.18/utils/key2pub.py
+--- crda-3.18.orig/utils/key2pub.py	2014-12-10 23:51:29.000000000 +0000
++++ crda-3.18/utils/key2pub.py	2016-02-15 00:07:46.683046403 +0000
+@@ -24,7 +24,7 @@
+     for v1, v2, v3, v4, v5, v6, v7, v8 in vnew:
+         if not idx:
+             output.write('\t')
+-        output.write('0x%.2x%.2x%.2x%.2x%.2x%.2x%.2x%.2x, ' % (ord(v1), ord(v2), ord(v3), ord(v4), ord(v5), ord(v6), ord(v7), ord(v8)))
++        output.write('0x%.2x%.2x%.2x%.2x%.2x%.2x%.2x%.2xULL, ' % (ord(v1), ord(v2), ord(v3), ord(v4), ord(v5), ord(v6), ord(v7), ord(v8)))
+         idx += 1
+         if idx == 2:
+             idx = 0
+@@ -60,6 +60,7 @@
+ def print_ssl(output, name, val):
+     import struct
+     output.write('#include <stdint.h>\n')
++    output.write('#include <openssl/bn.h>\n')
+     if len(struct.pack('@L', 0)) == 8:
+         return print_ssl_64(output, name, val)
+     else:
