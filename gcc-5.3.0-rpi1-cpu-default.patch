@@ -1,15 +1,14 @@
 Origin:                  http://www.intestinate.com/pilfs
 
---- gcc-5.2.0-orig/gcc/config.gcc	2015-08-12 22:52:18.307460317 -0400
-+++ gcc-5.2.0/gcc/config.gcc	2015-08-12 22:56:05.517691561 -0400
-@@ -1050,6 +1050,13 @@
+--- gcc-5.3.0-orig/gcc/config.gcc	2016-03-15 12:42:09.000000000 -0700
++++ gcc-5.3.0/gcc/config.gcc	2016-03-15 12:43:01.000000000 -0700
+@@ -1056,6 +1056,12 @@
  	    tmake_file="$tmake_file arm/t-linux-androideabi"
  	    ;;
  	esac
 +	case ${target} in
 +	arm*-*-*eabihf)
-+	    with_cpu=${with_cpu:-cortex-a7}
-+	    with_fpu=${with_fpu:-neon-vfpv4}
++	    with_cpu=${with_cpu:-arm1176jzf-s}
 +	    with_float=${with_float:-hard}
 +	    ;;
 +	esac
